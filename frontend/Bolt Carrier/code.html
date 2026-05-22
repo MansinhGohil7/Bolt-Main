@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Join BoltCarriers - Bolt Tools</title>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Google Fonts: Inter -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Configuration -->
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-tint": "#b0c6ff",
+                        "on-primary-fixed": "#001945",
+                        "on-secondary-fixed": "#1a1c1c",
+                        "surface-container-lowest": "#0e0e0e",
+                        "on-primary-container": "#002661",
+                        "tertiary-fixed": "#ffdbce",
+                        "surface-container-highest": "#353534",
+                        "on-background": "#e5e2e1",
+                        "tertiary": "#ffb599",
+                        "on-primary": "#002d6f",
+                        "inverse-on-surface": "#313030",
+                        "on-surface-variant": "#c2c6d8",
+                        "surface-bright": "#393939",
+                        "inverse-primary": "#0058cb",
+                        "surface": "#131313",
+                        "on-surface": "#e5e2e1",
+                        "on-error-container": "#ffdad6",
+                        "surface-container-low": "#1c1b1b",
+                        "secondary-container": "#454747",
+                        "on-secondary": "#2f3131",
+                        "on-tertiary-fixed": "#370e00",
+                        "on-error": "#690005",
+                        "surface-container-high": "#2a2a2a",
+                        "tertiary-fixed-dim": "#ffb599",
+                        "secondary-fixed": "#e2e2e2",
+                        "surface-dim": "#131313",
+                        "inverse-surface": "#e5e2e1",
+                        "tertiary-container": "#f36420",
+                        "secondary-fixed-dim": "#c6c6c7",
+                        "error-container": "#93000a",
+                        "on-secondary-fixed-variant": "#454747",
+                        "surface-variant": "#353534",
+                        "on-tertiary-fixed-variant": "#7f2b00",
+                        "primary-fixed": "#d9e2ff",
+                        "error": "#ffb4ab",
+                        "primary-fixed-dim": "#b0c6ff",
+                        "primary-container": "#568dff",
+                        "on-tertiary-container": "#4f1700",
+                        "surface-container": "#201f1f",
+                        "secondary": "#c6c6c7",
+                        "on-secondary-container": "#b4b5b5",
+                        "on-primary-fixed-variant": "#00429c",
+                        "primary": "#b0c6ff",
+                        "outline-variant": "#424655",
+                        "background": "#131313",
+                        "outline": "#8c90a1",
+                        "on-tertiary": "#5a1c00"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "unit": "8px",
+                        "margin-desktop": "64px",
+                        "margin-mobile": "20px",
+                        "gutter": "24px",
+                        "container-max": "1440px"
+                    },
+                    "fontFamily": {
+                        "headline-lg-mobile": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "caption": ["Inter"],
+                        "body-md": ["Inter"],
+                        "display-lg": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "label-md": ["Inter"]
+                    },
+                    "fontSize": {
+                        "headline-lg-mobile": ["24px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                        "headline-md": ["24px", {"lineHeight": "1.3", "letterSpacing": "-0.01em", "fontWeight": "500"}],
+                        "headline-lg": ["32px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                        "caption": ["12px", {"lineHeight": "1.4", "letterSpacing": "0", "fontWeight": "400"}],
+                        "body-md": ["16px", {"lineHeight": "1.6", "letterSpacing": "0", "fontWeight": "400"}],
+                        "display-lg": ["64px", {"lineHeight": "1.1", "letterSpacing": "-0.04em", "fontWeight": "600"}],
+                        "body-lg": ["18px", {"lineHeight": "1.6", "letterSpacing": "0", "fontWeight": "400"}],
+                        "label-md": ["14px", {"lineHeight": "1", "letterSpacing": "0.02em", "fontWeight": "500"}]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-md text-body-md antialiased min-h-screen flex flex-col selection:bg-primary-container selection:text-on-primary-container">
+<!-- TopNavBar -->
+<header class="fixed top-0 w-full bg-surface/80 backdrop-blur-md border-b border-outline-variant z-50">
+<div class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop flex justify-between items-center h-16">
+<!-- Brand -->
+<a class="font-headline-md text-headline-md font-bold tracking-tight text-on-surface" href="#">
+                Bolt Tools
+            </a>
+<!-- Navigation Links (Desktop) -->
+<nav class="hidden md:flex items-center gap-8">
+<a class="text-on-surface-variant hover:text-primary transition-colors duration-200" href="#">
+                    Home
+                </a>
+<a class="text-primary font-bold border-b-2 border-primary pb-1 active:scale-95 transition-transform" href="#">
+                    BoltCarriers
+                </a>
+<a class="text-on-surface-variant hover:text-primary transition-colors duration-200" href="#">
+                    Our Tools
+                </a>
+</nav>
+<!-- Trailing Action -->
+<button class="bg-inverse-primary text-on-primary font-label-md text-label-md px-6 py-2 rounded uppercase tracking-wider hover:bg-primary-container transition-colors">
+                Signup
+            </button>
+</div>
+</header>
+<!-- Main Canvas -->
+<main class="flex-grow pt-32 pb-32 flex flex-col gap-y-[128px] md:gap-y-[160px]">
+<!-- Hero Section -->
+<section class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop w-full grid grid-cols-1 md:grid-cols-12 gap-gutter">
+<div class="col-span-1 md:col-span-8 md:col-start-3 text-center flex flex-col items-center gap-8">
+<h1 class="font-display-lg text-display-lg text-on-surface">
+                    Join the Future of DevTools
+                </h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl">
+                    We build brutalist, high-performance architecture for the world's most demanding engineering teams. If you value precision over decoration, build with us.
+                </p>
+</div>
+</section>
+<!-- Why Bolt? Bento Grid -->
+<section class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop w-full">
+<div class="mb-16 md:col-span-12">
+<h2 class="font-headline-lg text-headline-lg text-on-surface mb-2">Why Bolt?</h2>
+<div class="h-px w-24 bg-primary-container"></div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-gutter">
+<!-- Card 1 -->
+<div class="bg-surface border border-outline-variant p-8 hover:shadow-[0_24px_48px_rgba(0,0,0,0.5)] transition-all duration-300 group flex flex-col gap-6">
+<span class="material-symbols-outlined text-4xl text-primary-container group-hover:text-primary transition-colors" style="font-variation-settings: 'FILL' 1;">
+                        rocket_launch
+                    </span>
+<div>
+<h3 class="font-headline-md text-headline-md text-on-surface mb-4">High Impact</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">
+                            Ship code that directly dictates the velocity of top-tier SaaS companies. No middle management, just raw output.
+                        </p>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="bg-surface border border-outline-variant p-8 hover:shadow-[0_24px_48px_rgba(0,0,0,0.5)] transition-all duration-300 group flex flex-col gap-6">
+<span class="material-symbols-outlined text-4xl text-primary-container group-hover:text-primary transition-colors" style="font-variation-settings: 'FILL' 1;">
+                        terminal
+                    </span>
+<div>
+<h3 class="font-headline-md text-headline-md text-on-surface mb-4">Deep Engineering</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">
+                            Tackle complex systems programming, compiler optimization, and distributed state management.
+                        </p>
+</div>
+</div>
+<!-- Card 3 -->
+<div class="bg-surface border border-outline-variant p-8 hover:shadow-[0_24px_48px_rgba(0,0,0,0.5)] transition-all duration-300 group flex flex-col gap-6">
+<span class="material-symbols-outlined text-4xl text-primary-container group-hover:text-primary transition-colors" style="font-variation-settings: 'FILL' 1;">
+                        forum
+                    </span>
+<div>
+<h3 class="font-headline-md text-headline-md text-on-surface mb-4">Radical Candor</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">
+                            A culture of immediate, direct feedback. We leave egos at the door to build the optimal solution.
+                        </p>
+</div>
+</div>
+</div>
+</section>
+<!-- Application Form Section -->
+<section class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop w-full grid grid-cols-1 md:grid-cols-12 gap-gutter">
+<div class="md:col-span-8 md:col-start-3 bg-surface border border-outline-variant p-8 md:p-16">
+<div class="mb-12">
+<h2 class="font-headline-lg text-headline-lg text-on-surface mb-2">Apply Now</h2>
+<p class="font-body-md text-body-md text-on-surface-variant mb-6">Submit your coordinates. We'll initiate contact.</p>
+<div id="statusFeedback" class="hidden px-5 py-4 rounded-[12px] font-label-md text-label-md border bg-primary/10 border-primary/30 text-primary">
+    Application submitted! We'll be in touch soon.
+</div>
+</div>
+<form id="applyForm" class="flex flex-col gap-12">
+<!-- Full Name -->
+<div class="flex flex-col gap-2">
+<label class="font-label-md text-label-md uppercase tracking-widest text-on-surface-variant" for="fullName">Full Name</label>
+<input class="w-full bg-transparent border-0 border-b border-outline-variant focus:ring-0 focus:border-primary-container px-0 py-2 text-on-surface font-body-lg text-body-lg transition-colors placeholder:text-outline" id="fullName" placeholder="Jane Doe" required="" type="text"/>
+</div>
+<!-- Email -->
+<div class="flex flex-col gap-2">
+<label class="font-label-md text-label-md uppercase tracking-widest text-on-surface-variant" for="emailAddress">Email Address</label>
+<input class="w-full bg-transparent border-0 border-b border-outline-variant focus:ring-0 focus:border-primary-container px-0 py-2 text-on-surface font-body-lg text-body-lg transition-colors placeholder:text-outline" id="emailAddress" placeholder="jane@example.com" required="" type="email"/>
+</div>
+<!-- Portfolio/GitHub -->
+<div class="flex flex-col gap-2">
+<label class="font-label-md text-label-md uppercase tracking-widest text-on-surface-variant" for="portfolioUrl">Portfolio / GitHub URL</label>
+<input class="w-full bg-transparent border-0 border-b border-outline-variant focus:ring-0 focus:border-primary-container px-0 py-2 text-on-surface font-body-lg text-body-lg transition-colors placeholder:text-outline" id="portfolioUrl" placeholder="https://github.com/janedoe" required="" type="url"/>
+</div>
+<!-- CV Upload -->
+<div class="flex flex-col gap-2">
+<label class="font-label-md text-label-md uppercase tracking-widest text-on-surface-variant">Resume / CV</label>
+<input type="file" id="cvUpload" class="hidden" accept=".pdf,.jpg,.jpeg,.png,.webp,.gif">
+<div id="dropZone" class="mt-2 border-2 border-dashed border-outline-variant bg-surface-container-low hover:bg-surface-container-high hover:border-primary-container/40 transition-all p-12 flex flex-col items-center justify-center text-center cursor-pointer rounded-DEFAULT group select-none">
+<div id="dropZoneEmpty" class="flex flex-col items-center">
+<span class="material-symbols-outlined text-4xl text-outline mb-4 group-hover:text-primary-container transition-colors">
+                                upload_file
+                            </span>
+<p class="font-body-md text-body-md text-on-surface mb-1">Drag and drop your file here</p>
+<p class="font-caption text-caption text-on-surface-variant">PDF or Image (JPG, PNG, WEBP) · Max 5MB</p>
+</div>
+<div id="dropZoneFilled" class="hidden flex flex-col items-center">
+<span class="material-symbols-outlined text-4xl text-primary-container mb-4">
+                                description
+                            </span>
+<p id="fileNameDisplay" class="font-body-md text-body-md text-on-surface mb-1 font-semibold"></p>
+<p id="fileSizeDisplay" class="font-caption text-caption text-on-surface-variant mb-4"></p>
+<button type="button" id="removeFileBtn" class="text-error hover:text-error/80 text-xs uppercase tracking-widest border border-error/20 px-4 py-2 rounded hover:bg-error/5 transition-colors">
+                                Remove File
+</button>
+</div>
+</div>
+</div>
+<!-- Submit Action -->
+<div class="mt-8">
+<button class="w-full md:w-auto bg-inverse-primary text-on-primary font-label-md text-label-md uppercase tracking-widest px-10 py-4 hover:bg-primary-container transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-surface" type="submit">
+                            Transmit Application
+                        </button>
+</div>
+</form>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="w-full bg-surface-container-lowest border-t border-outline-variant mt-auto">
+<div class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop py-unit-4 flex flex-col md:flex-row justify-between items-center gap-unit-2">
+<div class="font-label-md text-label-md font-black text-on-surface">
+                Bolt Tools
+            </div>
+<div class="font-caption text-caption text-on-surface-variant">
+                © 2024 Bolt Tools. All rights reserved.
+            </div>
+<nav class="flex gap-6">
+<a class="font-caption text-caption text-on-surface-variant hover:text-on-surface transition-colors" href="#">
+                    Privacy Policy
+                </a>
+<a class="font-caption text-caption text-on-surface-variant hover:text-on-surface transition-colors" href="#">
+                    Terms of Service
+                </a>
+<a class="font-caption text-caption text-on-surface-variant hover:text-on-surface transition-colors" href="#">
+                    Contact
+                </a>
+</nav>
+</div>
+</footer>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const applyForm = document.getElementById('applyForm');
+    const fullNameInput = document.getElementById('fullName');
+    const emailInput = document.getElementById('email');
+    const portfolioInput = document.getElementById('portfolio');
+    const cvUpload = document.getElementById('cvUpload');
+    const dropZone = document.getElementById('dropZone');
+    const dropZoneEmpty = document.getElementById('dropZoneEmpty');
+    const dropZoneFilled = document.getElementById('dropZoneFilled');
+    const fileNameDisplay = document.getElementById('fileNameDisplay');
+    const fileSizeDisplay = document.getElementById('fileSizeDisplay');
+    const removeFileBtn = document.getElementById('removeFileBtn');
+    const statusFeedback = document.getElementById('statusFeedback');
+
+    let selectedFile = null;
+
+    // Trigger file selection on click
+    dropZone.addEventListener('click', () => {
+        cvUpload.click();
+    });
+
+    // Handle file selection change
+    cvUpload.addEventListener('change', (e) => {
+        const file = e.target.files[0];
+        handleFileSelection(file);
+    });
+
+    // Drag-and-drop events
+    ['dragenter', 'dragover'].forEach(eventName => {
+        dropZone.addEventListener(eventName, (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            dropZone.classList.add('border-primary', 'bg-primary/10', 'shadow-[0_0_24px_rgba(176,198,255,0.15)]');
+        }, false);
+    });
+
+    ['dragleave', 'dragend'].forEach(eventName => {
+        dropZone.addEventListener(eventName, (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            dropZone.classList.remove('border-primary', 'bg-primary/10', 'shadow-[0_0_24px_rgba(176,198,255,0.15)]');
+        }, false);
+    });
+
+    dropZone.addEventListener('drop', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        dropZone.classList.remove('border-primary', 'bg-primary/10', 'shadow-[0_0_24px_rgba(176,198,255,0.15)]');
+        
+        const file = e.dataTransfer.files[0];
+        handleFileSelection(file);
+    }, false);
+
+    function formatFileSize(bytes) {
+        if (bytes < 1024) return `${bytes} B`;
+        if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`;
+        return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
+    }
+
+    function handleFileSelection(file) {
+        if (!file) return;
+
+        // Check if PDF or image
+        const allowedTypes = [
+            'application/pdf',
+            'image/jpeg',
+            'image/png',
+            'image/webp',
+            'image/gif'
+        ];
+        if (!allowedTypes.includes(file.type)) {
+            alert('Only PDF or image files (JPG, PNG, WEBP) are allowed.');
+            return;
+        }
+
+        if (file.size > 5 * 1024 * 1024) {
+            alert('File must be under 5MB.');
+            return;
+        }
+
+        selectedFile = file;
+        fileNameDisplay.textContent = file.name;
+        fileSizeDisplay.textContent = formatFileSize(file.size);
+
+        dropZoneEmpty.classList.add('hidden');
+        dropZoneFilled.classList.remove('hidden');
+        
+        // Custom background state
+        dropZone.classList.add('border-primary/50', 'bg-primary/5');
+        dropZone.classList.remove('border-outline-variant', 'bg-surface-container-low');
+    }
+
+    // Remove file button
+    removeFileBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        selectedFile = null;
+        cvUpload.value = '';
+        dropZoneEmpty.classList.remove('hidden');
+        dropZoneFilled.classList.add('hidden');
+        
+        dropZone.classList.remove('border-primary/50', 'bg-primary/5');
+        dropZone.classList.add('border-outline-variant', 'bg-surface-container-low');
+    });
+
+    // Form submission
+    applyForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+
+        if (!selectedFile) {
+            alert('Please select or upload your resume file.');
+            return;
+        }
+
+        // Get button to disable/show loading state
+        const submitBtn = applyForm.querySelector('button[type="submit"]');
+        const originalBtnText = submitBtn.innerHTML;
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = `
+            <span class="flex items-center justify-center gap-2">
+                <svg class="w-4 h-4 animate-spin text-on-primary" fill="none" viewBox="0 0 24 24">
+                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"/>
+                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/>
+                </svg>
+                Transmitting...
+            </span>
+        `;
+        try {
+            const reader = new FileReader();
+            reader.onload = () => {
+                const dataUrl = reader.result;
+                const base64Content = dataUrl.split(',')[1]; // Strips metadata header cleanly
+
+                const payloadData = {
+                    fullName: document.querySelector('[placeholder="Jane Doe"]')?.value || document.querySelector('#fullName')?.value || "",
+                    emailAddress: document.querySelector('[placeholder="jane@example.com"]')?.value || document.querySelector('#emailAddress')?.value || "",
+                    portfolioUrl: document.querySelector('[placeholder="https://github.com/janedoe"]')?.value || document.querySelector('#portfolioUrl')?.value || "",
+                    fileName: selectedFile.name,
+                    fileType: selectedFile.type,
+                    fileData: base64Content
+                };
+
+                fetch('https://script.google.com/macros/s/AKfycbw3uNkRWLjevkKnmi118UNgF-El3wi2hGbtFVdC2mqqY_VY3BZLfykAOL-LYn7Zemoq/exec', {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: {
+                        'Content-Type': 'text/plain;charset=utf-8'
+                    },
+                    body: JSON.stringify(payloadData)
+                })
+                .then(() => {
+                    // Show success banner
+                    statusFeedback.textContent = "Application submitted! We'll be in touch soon.";
+                    statusFeedback.classList.remove('hidden');
+                    
+                    // Clear fields
+                    applyForm.reset();
+                    selectedFile = null;
+                    cvUpload.value = '';
+                    dropZoneEmpty.classList.remove('hidden');
+                    dropZoneFilled.classList.add('hidden');
+                    dropZone.classList.remove('border-primary/50', 'bg-primary/5');
+                    dropZone.classList.add('border-outline-variant', 'bg-surface-container-low');
+
+                    // Scroll to status feedback banner smoothly
+                    statusFeedback.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                })
+                .catch(err => {
+                    console.error("Upload execution crash:", err);
+                    alert('Submission failed. Please check your connection and try again.');
+                })
+                .finally(() => {
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = originalBtnText;
+                });
+            };
+            reader.onerror = (err) => {
+                console.error("File reading error:", err);
+                alert('Failed to read resume file. Please try again.');
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = originalBtnText;
+            };
+            reader.readAsDataURL(selectedFile);
+        } catch (error) {
+            console.error("Submission exception:", error);
+            alert('An error occurred during submission. Please try again.');
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = originalBtnText;
+        }
+    });
+});
+</script>
+</body></html>

@@ -1,0 +1,437 @@
+<!DOCTYPE html><html class="dark" lang="en" style=""><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Contact Us - Bolt Tools</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-secondary-fixed-variant": "#454747",
+                        "error-container": "#93000a",
+                        "on-error": "#690005",
+                        "tertiary": "#ffb599",
+                        "on-secondary": "#2f3131",
+                        "surface-container-high": "#2a2a2a",
+                        "on-primary": "#002d6f",
+                        "on-surface-variant": "#c2c6d8",
+                        "primary-fixed-dim": "#b0c6ff",
+                        "inverse-on-surface": "#313030",
+                        "surface-container": "#201f1f",
+                        "on-background": "#e5e2e1",
+                        "inverse-primary": "#0058cb",
+                        "outline-variant": "#424655",
+                        "on-tertiary-container": "#4f1700",
+                        "tertiary-fixed": "#ffdbce",
+                        "surface-container-lowest": "#0e0e0e",
+                        "inverse-surface": "#e5e2e1",
+                        "surface-container-highest": "#353534",
+                        "secondary-fixed-dim": "#c6c6c7",
+                        "outline": "#8c90a1",
+                        "on-secondary-container": "#b4b5b5",
+                        "on-primary-fixed-variant": "#00429c",
+                        "error": "#ffb4ab",
+                        "surface": "#131313",
+                        "on-secondary-fixed": "#1a1c1c",
+                        "surface-variant": "#353534",
+                        "surface-container-low": "#1c1b1b",
+                        "on-tertiary": "#5a1c00",
+                        "on-primary-fixed": "#001945",
+                        "surface-bright": "#393939",
+                        "tertiary-fixed-dim": "#ffb599",
+                        "on-tertiary-fixed-variant": "#7f2b00",
+                        "on-surface": "#e5e2e1",
+                        "secondary-fixed": "#e2e2e2",
+                        "primary-fixed": "#d9e2ff",
+                        "on-error-container": "#ffdad6",
+                        "surface-tint": "#b0c6ff",
+                        "background": "#131313",
+                        "secondary-container": "#454747",
+                        "tertiary-container": "#f36420",
+                        "primary": "#b0c6ff",
+                        "surface-dim": "#131313",
+                        "secondary": "#c6c6c7",
+                        "on-tertiary-fixed": "#370e00",
+                        "on-primary-container": "#002661",
+                        "primary-container": "#568dff",
+                        "brand-blue": "#0070FF"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "margin-desktop": "64px",
+                        "container-max": "1440px",
+                        "unit": "8px",
+                        "gutter": "24px",
+                        "margin-mobile": "20px"
+                    },
+                    "fontFamily": {
+                        "headline-md": ["Inter"],
+                        "display-lg": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "label-md": ["Inter"],
+                        "caption": ["Inter"],
+                        "headline-lg-mobile": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "body-md": ["Inter"]
+                    },
+                    "fontSize": {
+                        "headline-md": ["24px", { "lineHeight": "1.3", "letterSpacing": "-0.01em", "fontWeight": "500" }],
+                        "display-lg": ["64px", { "lineHeight": "1.1", "letterSpacing": "-0.04em", "fontWeight": "600" }],
+                        "body-lg": ["18px", { "lineHeight": "1.6", "letterSpacing": "0", "fontWeight": "400" }],
+                        "label-md": ["14px", { "lineHeight": "1", "letterSpacing": "0.02em", "fontWeight": "500" }],
+                        "caption": ["12px", { "lineHeight": "1.4", "letterSpacing": "0", "fontWeight": "400" }],
+                        "headline-lg-mobile": ["24px", { "lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "600" }],
+                        "headline-lg": ["32px", { "lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "600" }],
+                        "body-md": ["16px", { "lineHeight": "1.6", "letterSpacing": "0", "fontWeight": "400" }]
+                    },
+                    "animation": {
+                        "fade-in-up": "fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards",
+                        "float": "float 6s ease-in-out infinite",
+                        "pulse-icon": "pulseIcon 2s infinite",
+                        "bg-gradient": "bgGradient 15s ease infinite",
+                        "success-check": "successCheck 0.5s cubic-bezier(0.65, 0, 0.45, 1) forwards"
+                    },
+                    "keyframes": {
+                        "fadeInUp": {
+                            "0%": { opacity: "0", transform: "translateY(20px)" },
+                            "100%": { opacity: "1", transform: "translateY(0)" }
+                        },
+                        "float": {
+                            "0%, 100%": { transform: "translateY(0)" },
+                            "50%": { transform: "translateY(-10px)" }
+                        },
+                        "pulseIcon": {
+                            "0%, 100%": { transform: "translateX(0)" },
+                            "50%": { transform: "translateX(4px)" }
+                        },
+                        "bgGradient": {
+                            "0%, 100%": { backgroundPosition: "0% 50%" },
+                            "50%": { backgroundPosition: "100% 50%" }
+                        },
+                        "successCheck": {
+                            "0%": { transform: "scale(0)", opacity: "0" },
+                            "50%": { transform: "scale(1.2)" },
+                            "100%": { transform: "scale(1)", opacity: "1" }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body {
+            background-color: theme('colors.background');
+            color: theme('colors.on-background');
+            font-family: 'Inter', sans-serif;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
+        
+        .animated-bg {
+            background: linear-gradient(-45deg, #0a0a0a, #131313, #0a101a, #0a0a0a);
+            background-size: 400% 400%;
+            animation: bgGradient 15s ease infinite;
+        }
+
+        .bg-grid-pattern {
+            background-size: 40px 40px;
+            background-image: linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                              linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+        }
+        
+        .glass-lift {
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .glass-lift:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.5), 0 0 20px rgba(0, 112, 255, 0.1);
+            border-color: rgba(0, 112, 255, 0.3);
+            background-color: rgba(30, 30, 30, 0.95);
+        }
+
+        .stagger-1 { animation-delay: 0.1s; opacity: 0; }
+        .stagger-2 { animation-delay: 0.2s; opacity: 0; }
+        .stagger-3 { animation-delay: 0.3s; opacity: 0; }
+        .stagger-4 { animation-delay: 0.4s; opacity: 0; }
+
+        #particles-js {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col animated-bg relative">
+<!-- Particle Background -->
+<canvas id="particles-js" width="1280" height="1390"></canvas>
+<div class="absolute inset-0 bg-grid-pattern pointer-events-none z-0"></div>
+<!-- TopNavBar -->
+<header class="bg-surface/90 dark:bg-surface/90 backdrop-blur-md border-b border-outline-variant dark:border-outline-variant font-body-md text-body-md sticky top-0 z-50 w-full transition-all duration-300">
+<div class="h-20 w-full flex justify-between items-center px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto relative z-10">
+<!-- Brand -->
+<div class="flex items-center gap-4">
+<img alt="Bolt Tools Logo" class="h-8 w-8 object-contain rounded-DEFAULT" src="https://lh3.googleusercontent.com/aida/ADBb0uhWO100IXLDEldH0YJtErmsjIWHSE1gdTsJ7hxB7nD2RWtL4P7NtVrBLVnaUf8MOpZCkpEnZrS5eH34WHY-l3-_E_cmao5HtVXjhxvLzUMwjKswa1SMCUzbWEWdyB59RKRR6NeRIBr97pioveYNbjo1XqBx62YPAIAFKimR_adKcvBk4R0K7Cz6kYt4F0_pY_S4phtpz0VYVEgj28Cr8AEfCyRYDQ1UOfbTshtveD3-Pnk4JxtywDqQBEER">
+<span class="text-headline-md font-headline-md font-bold tracking-tighter text-on-surface dark:text-on-surface">Bolt Tools</span>
+</div>
+<!-- Navigation Links (Desktop) -->
+<nav class="hidden md:flex items-center gap-8">
+<a class="text-on-surface-variant dark:text-on-surface-variant hover:text-primary dark:hover:text-primary transition-colors duration-200" href="#">Products</a>
+<a class="text-on-surface-variant dark:text-on-surface-variant hover:text-primary dark:hover:text-primary transition-colors duration-200" href="#">Documentation</a>
+<a class="text-on-surface-variant dark:text-on-surface-variant hover:text-primary dark:hover:text-primary transition-colors duration-200" href="#">Enterprise</a>
+<a class="text-on-surface-variant dark:text-on-surface-variant hover:text-primary dark:hover:text-primary transition-colors duration-200" href="#">Pricing</a>
+<a class="text-primary dark:text-primary border-b-2 border-primary pb-1" href="#">Contact</a>
+</nav>
+<!-- Actions -->
+<div class="hidden md:flex items-center gap-4">
+<button class="text-on-surface-variant hover:text-primary transition-colors duration-200 px-4 py-2 font-label-md text-label-md uppercase tracking-wider">Login</button>
+<button class="bg-[#0070FF] text-white px-6 py-2 rounded-DEFAULT font-label-md text-label-md uppercase tracking-wider hover:opacity-90 transition-all duration-300 hover:shadow-[0_0_15px_rgba(0,112,255,0.4)] active:scale-95">Get Started</button>
+</div>
+<!-- Mobile Menu Toggle -->
+<button class="md:hidden text-on-surface">
+<span class="material-symbols-outlined" data-icon="menu">menu</span>
+</button>
+</div>
+</header>
+<!-- Main Content -->
+<main class="flex-grow w-full max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop py-16 md:py-24 relative z-20">
+<!-- Hero Section -->
+<section class="mb-16 md:mb-20 max-w-3xl">
+<div class="inline-flex items-center gap-2 px-3 py-1 bg-white/5 border border-white/10 rounded-DEFAULT mb-8 animate-fade-in-up stagger-1">
+<span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+<span class="font-caption text-caption text-on-surface-variant uppercase tracking-widest">All Systems Operational</span>
+</div>
+<h1 class="font-display-lg text-headline-lg-mobile md:text-display-lg text-on-surface mb-6 animate-fade-in-up stagger-2">Connect With Us.</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant animate-fade-in-up stagger-3">Engage with our architectural engineering team. Whether you require enterprise scaling solutions or technical consultation, we are ready to deploy.</p>
+</section>
+<!-- Grid Layout for Contact Information and Form -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter items-start">
+<!-- Service Request Form (High Visibility Fix) -->
+<div class="lg:col-span-7 bg-[#1E1E1E] border border-[#333333] rounded-lg p-8 md:p-12 transition-all duration-500 shadow-[0_24px_64px_rgba(0,0,0,0.6)] animate-fade-in-up stagger-4 relative overflow-hidden z-30" id="formContainer">
+<!-- Success State Overlay -->
+<div class="absolute inset-0 bg-[#131313] z-50 flex flex-col items-center justify-center opacity-0 pointer-events-none transition-all duration-500" id="successState">
+<div class="relative">
+<div class="absolute inset-0 bg-emerald-500/20 blur-2xl rounded-full scale-150 animate-pulse"></div>
+<div class="relative w-24 h-24 rounded-full border-2 border-emerald-500/30 flex items-center justify-center mb-8">
+<span class="material-symbols-outlined text-emerald-400 text-6xl" id="successIcon">check_circle</span>
+</div>
+</div>
+<h3 class="font-display text-2xl font-bold text-white mb-3 tracking-tight">Request Initialized</h3>
+<p class="font-body-md text-slate-400 text-center max-w-sm px-6">
+        Architectural protocols engaged. Our engineering team will synchronize within 4 hours.
+    </p>
+<button class="mt-8 text-xs uppercase tracking-[0.2em] text-primary hover:text-white transition-colors border-b border-primary/30 pb-1" onclick="window.location.reload()">Close Protocol</button>
+</div>
+<div class="relative z-10">
+<div class="flex items-center gap-3 mb-12">
+<div class="h-[2px] w-12 bg-primary"></div>
+<h2 class="font-display text-2xl font-bold text-white tracking-tight uppercase">Service Request Protocol</h2>
+</div>
+<form class="space-y-12" id="contactForm">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-12">
+<!-- Input Group -->
+<div class="relative group">
+<input class="peer w-full bg-transparent border-0 border-b border-white/20 py-3 focus:ring-0 focus:border-primary transition-all duration-300 text-white placeholder-transparent text-body-md" id="name" placeholder="Full Name" required="" type="text">
+<label class="absolute left-0 -top-4 text-xs uppercase tracking-widest text-slate-400 transition-all peer-placeholder-shown:text-base peer-placeholder-shown:text-slate-500 peer-placeholder-shown:top-3 peer-focus:-top-4 peer-focus:text-primary peer-focus:text-xs pointer-events-none font-medium" for="name">Full Name</label>
+<div class="absolute bottom-0 left-0 h-[2px] w-0 bg-primary transition-all duration-500 group-focus-within:w-full shadow-[0_0_12px_rgba(0,112,255,0.8)]"></div>
+</div>
+<!-- Input Group -->
+<div class="relative group">
+<input class="peer w-full bg-transparent border-0 border-b border-white/20 py-3 focus:ring-0 focus:border-primary transition-all duration-300 text-white placeholder-transparent text-body-md" id="company" placeholder="e.g. $5,000 - $10,000" type="text">
+<label class="absolute left-0 -top-4 text-xs uppercase tracking-widest text-slate-400 transition-all peer-placeholder-shown:text-base peer-placeholder-shown:text-slate-500 peer-placeholder-shown:top-3 peer-focus:-top-4 peer-focus:text-primary peer-focus:text-xs pointer-events-none font-medium" for="company">Budget</label>
+<div class="absolute bottom-0 left-0 h-[2px] w-0 bg-primary transition-all duration-500 group-focus-within:w-full shadow-[0_0_12px_rgba(0,112,255,0.8)]"></div>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-12">
+    <!-- Work Email -->
+    <div class="relative group">
+        <input class="peer w-full bg-transparent border-0 border-b border-white/20 py-3 focus:ring-0 focus:border-primary transition-all duration-300 text-white placeholder-transparent text-body-md" id="email" placeholder="Work Email" required="" type="email">
+        <label class="absolute left-0 -top-4 text-xs uppercase tracking-widest text-slate-400 transition-all peer-placeholder-shown:text-base peer-placeholder-shown:text-slate-500 peer-placeholder-shown:top-3 peer-focus:-top-4 peer-focus:text-primary peer-focus:text-xs pointer-events-none font-medium" for="email">Work Email</label>
+        <div class="absolute bottom-0 left-0 h-[2px] w-0 bg-primary transition-all duration-500 group-focus-within:w-full shadow-[0_0_12px_rgba(0,112,255,0.8)]"></div>
+    </div>
+    <!-- Phone Number -->
+    <div class="relative group">
+        <input class="peer w-full bg-transparent border-0 border-b border-white/20 py-3 focus:ring-0 focus:border-primary transition-all duration-300 text-white placeholder-transparent text-body-md" id="phone" placeholder="+1 (555) 000-0000" type="tel">
+        <label class="absolute left-0 -top-4 text-xs uppercase tracking-widest text-slate-400 transition-all peer-placeholder-shown:text-base peer-placeholder-shown:text-slate-500 peer-placeholder-shown:top-3 peer-focus:-top-4 peer-focus:text-primary peer-focus:text-xs pointer-events-none font-medium" for="phone">Phone Number</label>
+        <div class="absolute bottom-0 left-0 h-[2px] w-0 bg-primary transition-all duration-500 group-focus-within:w-full shadow-[0_0_12px_rgba(0,112,255,0.8)]"></div>
+    </div>
+</div>
+<div class="relative group">
+<textarea class="peer w-full bg-transparent border-0 border-b border-white/20 py-3 focus:ring-0 focus:border-primary transition-all duration-300 text-white placeholder-transparent resize-none min-h-[120px] text-body-md" id="message" placeholder="Project Details" required=""></textarea>
+<label class="absolute left-0 -top-4 text-xs uppercase tracking-widest text-slate-400 transition-all peer-placeholder-shown:text-base peer-placeholder-shown:text-slate-500 peer-placeholder-shown:top-3 peer-focus:-top-4 peer-focus:text-primary peer-focus:text-xs pointer-events-none font-medium" for="message">WHAT'S IN YOUR MIND?</label>
+<div class="absolute bottom-0 left-0 h-[2px] w-0 bg-primary transition-all duration-500 group-focus-within:w-full shadow-[0_0_12px_rgba(0,112,255,0.8)]"></div>
+</div>
+<div class="pt-8 flex flex-col sm:flex-row items-center justify-between gap-8">
+<div class="flex flex-col">
+<p class="text-[10px] uppercase tracking-[0.2em] text-slate-500 mb-2">Expect Response</p>
+<p class="font-display text-sm text-white flex items-center gap-2 font-semibold">
+<span class="relative flex h-2.5 w-2.5">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+<span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
+</span>&nbsp;&lt; 04 HOURS
+                </p>
+</div>
+<button class="relative overflow-hidden bg-brand-blue text-white px-12 py-5 rounded-lg font-bold text-xs uppercase tracking-[0.2em] hover:shadow-[0_0_40px_rgba(0,112,255,0.5)] transition-all duration-500 active:scale-95 group w-full sm:w-auto" id="submitBtn" type="submit">
+<span class="relative z-10 flex items-center justify-center gap-3">let's connect<span class="material-symbols-outlined text-[20px] group-hover:translate-x-1 transition-transform">arrow_forward</span>
+</span>
+<div class="absolute inset-0 bg-white/10 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
+</button>
+</div>
+</form>
+</div>
+</div>
+<!-- Contact Channels -->
+<div class="lg:col-span-5 flex flex-col gap-gutter z-30">
+<!-- Email Card -->
+<div class="bg-[#1E1E1E] border border-[#333333] rounded-lg p-8 group glass-lift cursor-pointer animate-fade-in-up stagger-2">
+<div class="flex justify-between items-start mb-6">
+<div class="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center text-primary group-hover:bg-[#0070FF]/20 group-hover:text-[#0070FF] transition-all duration-300 transform group-hover:scale-110">
+<span class="material-symbols-outlined">mail</span>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant opacity-0 group-hover:opacity-100 transition-opacity duration-300">open_in_new</span>
+</div>
+<h3 class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider mb-2">Technical Support</h3>
+<p class="font-headline-md text-headline-md text-on-surface group-hover:text-primary transition-colors duration-300 break-all">support@bolttools.io</p>
+</div>
+<!-- Phone Card -->
+<div class="bg-[#1E1E1E] border border-[#333333] rounded-lg p-8 group glass-lift cursor-pointer animate-fade-in-up stagger-3">
+<div class="flex justify-between items-start mb-6">
+<div class="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center text-primary group-hover:bg-[#0070FF]/20 group-hover:text-[#0070FF] transition-all duration-300 transform group-hover:scale-110">
+<span class="material-symbols-outlined">call</span>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant opacity-0 group-hover:opacity-100 transition-opacity duration-300">open_in_new</span>
+</div>
+<h3 class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider mb-2">Direct Line (Urgent)</h3>
+<p class="font-headline-md text-headline-md text-on-surface group-hover:text-primary transition-colors duration-300">+91 88499 52182</p>
+</div>
+<!-- Location -->
+<div class="relative bg-[#1E1E1E] border border-[#333333] rounded-lg overflow-hidden flex-grow min-h-[220px] glass-lift animate-fade-in-up stagger-4 group">
+<div class="absolute inset-0 bg-cover bg-center opacity-30 mix-blend-luminosity animate-float transition-opacity duration-500 group-hover:opacity-50" style="background-image: url('https://lh3.googleusercontent.com/aida/ADBb0uhCUAaIGj8Dd4abhIwb3a4GQX8ETQmOvm4N9Fy1SqeWWm5ezKkiRPQkCyo5qyqsvuS-VQPboIioX0TVGly8BoXdlZmtAZ4WD08_98Z3ncWPit0KRcLr-Qv6oXBrU2d1zEPHM1BUtqJJKyUjt0B9Illf6D5-No8RCdYxaR28uHF_jPAMrWLwI-sfzJBrsz4ZPre207z1UZHnZ7tJ5DOSc75wHPNec4g3HUd2SzUF9VK2rYhp9fkFBEM_OF4');"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-[#131313] via-[#131313]/60 to-transparent"></div>
+<div class="absolute bottom-0 left-0 p-8 w-full z-10 transform transition-transform duration-500 group-hover:translate-y-[-4px]">
+<h3 class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider mb-2">Global Headquarters</h3>
+<p class="font-body-md text-body-md text-on-surface flex items-center gap-2 group-hover:text-primary transition-colors font-medium">
+<span class="material-symbols-outlined text-[20px] text-primary">location_on</span>Bhavnagar, Gujarat, India.</p>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Footer -->
+<footer class="bg-surface/95 dark:bg-surface/95 backdrop-blur-md border-t border-outline-variant dark:border-outline-variant relative z-40">
+<div class="py-16 w-full flex flex-col md:flex-row justify-between items-center px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto gap-gutter">
+<!-- Brand & Copyright -->
+<div class="flex flex-col items-center md:items-start gap-4">
+<span class="text-label-md font-label-md font-bold text-on-surface">Bolt Tools</span>
+<span class="font-caption text-caption uppercase tracking-widest text-on-surface-variant">© 2024 Bolt Tools. High-Performance Architectural Precision.</span>
+</div>
+<!-- Footer Links -->
+<nav class="flex flex-wrap justify-center gap-8">
+<a class="font-caption text-caption uppercase tracking-widest text-on-secondary-fixed-variant hover:text-on-surface transition-colors duration-300" href="#">Documentation</a>
+<a class="font-caption text-caption uppercase tracking-widest text-on-secondary-fixed-variant hover:text-on-surface transition-colors duration-300" href="#">Changelog</a>
+<a class="font-caption text-caption uppercase tracking-widest text-on-secondary-fixed-variant hover:text-on-surface transition-colors duration-300" href="#">Security</a>
+<a class="font-caption text-caption uppercase tracking-widest text-on-secondary-fixed-variant hover:text-on-surface transition-colors duration-300" href="#">Privacy</a>
+<a class="font-caption text-caption uppercase tracking-widest text-on-secondary-fixed-variant hover:text-on-surface transition-colors duration-300" href="#">Terms</a>
+</nav>
+</div>
+</footer>
+<script>
+    // Particle effect
+    const canvas = document.getElementById('particles-js');
+    const ctx = canvas.getContext('2d');
+    let width, height, particles;
+
+    function initParticles() {
+        width = canvas.width = window.innerWidth;
+        height = canvas.height = window.innerHeight;
+        particles = [];
+        const particleCount = Math.floor((width * height) / 20000); 
+
+        for (let i = 0; i < particleCount; i++) {
+            particles.push({
+                x: Math.random() * width,
+                y: Math.random() * height,
+                vx: (Math.random() - 0.5) * 0.3,
+                vy: (Math.random() - 0.5) * 0.3,
+                radius: Math.random() * 1.2,
+                alpha: Math.random() * 0.4
+            });
+        }
+    }
+
+    function drawParticles() {
+        ctx.clearRect(0, 0, width, height);
+        particles.forEach(p => {
+            p.x += p.vx;
+            p.y += p.vy;
+            if (p.x < 0) p.x = width;
+            if (p.x > width) p.x = 0;
+            if (p.y < 0) p.y = height;
+            if (p.y > height) p.y = 0;
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+            ctx.fillStyle = `rgba(176, 198, 255, ${p.alpha})`;
+            ctx.fill();
+        });
+        requestAnimationFrame(drawParticles);
+    }
+
+    window.addEventListener('resize', initParticles);
+    initParticles();
+    drawParticles();
+
+    // Form Submission Handling
+    document.getElementById('contactForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const successState = document.getElementById('successState');
+        const icon = document.getElementById('successIcon');
+        successState.classList.remove('opacity-0', 'pointer-events-none');
+        icon.classList.add('animate-success-check');
+        setTimeout(() => { this.reset(); }, 500);
+    });
+
+    // Brand New Independent Listener for Service Request Protocol Sheet Integration
+    document.getElementById('contactForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        // Gather data from input elements
+        const payload = {
+            fullName: document.getElementById('name').value,
+            budget: document.getElementById('company').value,
+            workEmail: document.getElementById('email').value,
+            phoneNumber: document.getElementById('phone').value,
+            message: document.getElementById('message').value
+        };
+
+        // Transmit via fetch with mode: 'no-cors'
+        fetch('https://script.google.com/macros/s/AKfycbzTrq1CXAtki4WcOu-HyuPttN-w7hr1V3_WsCSfLP92Mr9LEM-P8q8JTmIf5cH2oz-g/exec', {
+            method: 'POST',
+            mode: 'no-cors',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(payload)
+        })
+        .then(() => {
+            console.log('Service Request Protocol payload transmitted successfully.');
+        })
+        .catch((error) => {
+            console.error('Error transmitting Service Request Protocol payload:', error);
+        });
+    });
+</script>
+
+
+</body></html>

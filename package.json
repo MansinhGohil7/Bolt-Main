@@ -1,0 +1,20 @@
+{
+  "name": "boltmain",
+  "version": "1.0.0",
+  "description": "This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.",
+  "main": "index.js",
+  "scripts": {
+    "server": "cd backend && npm start",
+    "client": "cd frontend && npm run dev",
+    "dev": "concurrently --names \"SERVER,CLIENT\" --prefix-colors \"yellow,cyan\" \"npm run server\" \"npm run client\"",
+    "build": "npm ci --prefix frontend && npm run build --prefix frontend && mkdir -p dist && cp -r frontend/dist/* dist/",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "devDependencies": {
+    "concurrently": "^9.2.1"
+  }
+}
