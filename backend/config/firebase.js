@@ -4,8 +4,23 @@ require('dotenv').config();
 let db;
 try {
   if (process.env.FIREBASE_CREDENTIALS) {
-    // Parse service account JSON from environment variable
-    const serviceAccount = JSON.parse(process.env.FIREBASE_CREDENTIALS);
+    let serviceAccount;
+    try {
+      // Replace literal backslash-n instances with actual newline characters
+      const fixedCredentials = process.env.FIREBASE_CREDENTIALS.replace(/\\n/g, '\n');
+      serviceAccount = JSON.parse(fixedCredentials);
+    } catch (parseError) {
+      // Fallback: parse original credentials and sanitize private_key property to avoid JSON parsing errors
+      try {
+        serviceAccount = JSON.parse(process.env.FIREBASE_CREDENTIALS);
+        if (serviceAccount.private_key) {
+          serviceAccount.private_key = serviceAccount.private_key.replace(/\\n/g, '\n');
+        }
+      } catch (innerError) {
+        throw new Error(`Failed to parse FIREBASE_CREDENTIALS. parseError: ${parseError.message}. innerError: ${innerError.message}`);
+      }
+    }
+
     admin.initializeApp({
       credential: admin.credential.cert(serviceAccount)
     });
