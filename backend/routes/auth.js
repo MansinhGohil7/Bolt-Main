@@ -1,12 +1,13 @@
 const express = require('express');
 const router = express.Router();
-const mongoose = require('mongoose');
-const User = require('../models/User');
 const jwt = require('jsonwebtoken');
 const crypto = require('crypto');
 const nodemailer = require('nodemailer');
+const bcrypt = require('bcryptjs');
+const admin = require('firebase-admin');
 const { OAuth2Client } = require('google-auth-library');
 const https = require('https');
+const db = require('../config/firebase');
 
 const googleClient = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 
@@ -31,22 +32,8 @@ const getGoogleUserInfo = (accessToken) => {
   });
 };
 
-// ── DB HEALTH-CHECK MIDDLEWARE ─────────────────────────────
-// Runs before EVERY route in this file. If Mongo is not
-// connected (readyState !== 1), return 503 instantly instead
-// of buffering for 10 seconds and timing out.
-router.use((req, res, next) => {
-  if (mongoose.connection.readyState !== 1) {
-    return res.status(503).json({
-      success: false,
-      error: 'Database connection lost. Please check backend logs.'
-    });
-  }
-  next();
-});
-
-const sendTokenResponse = (user, statusCode, res) => {
-  const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
+const sendTokenResponse = (userId, statusCode, res) => {
+  const token = jwt.sign({ id: userId }, process.env.JWT_SECRET, {
     expiresIn: '30d'
   });
   res.status(statusCode).json({ success: true, token });
@@ -54,19 +41,33 @@ const sendTokenResponse = (user, statusCode, res) => {
 
 router.post('/signup', async (req, res) => {
   console.log('--- SIGNUP REQUEST START ---');
-  console.log(`Global mongoose readyState: ${mongoose.connection.readyState}`);
-  console.log(`Global mongoose DB name: ${mongoose.connection.name}`);
-  console.log(`User model db readyState: ${User.db.readyState}`);
-  console.log(`User model db name: ${User.db.name}`);
-  
   try {
     const { fullName, email, password } = req.body;
-    let user = await User.findOne({ email });
-    if (user) {
+    if (!email || !password) {
+      return res.status(400).json({ success: false, error: 'Please provide email and password' });
+    }
+    const emailLower = email.toLowerCase();
+    
+    // Check if user exists in Firestore
+    const userSnap = await db.collection("users").where("email", "==", emailLower).limit(1).get();
+    if (!userSnap.empty) {
       return res.status(400).json({ success: false, error: 'User already exists' });
     }
-    user = await User.create({ fullName, email, password });
-    sendTokenResponse(user, 201, res);
+    
+    // Hash password manually since Mongoose hooks are gone
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(password, salt);
+    
+    // Create new document reference (auto-ID)
+    const userRef = db.collection("users").doc();
+    await userRef.set({
+      fullName: fullName || '',
+      email: emailLower,
+      password: hashedPassword,
+      createdAt: new Date().toISOString()
+    });
+    
+    sendTokenResponse(userRef.id, 201, res);
   } catch (error) {
     console.error('SIGNUP ERROR:', error);
     res.status(500).json({ success: false, error: error.message });
@@ -79,15 +80,24 @@ router.post('/login', async (req, res) => {
     if (!email || !password) {
       return res.status(400).json({ success: false, error: 'Please provide email and password' });
     }
-    const user = await User.findOne({ email }).select('+password');
-    if (!user) {
+    const emailLower = email.toLowerCase();
+    
+    // Fetch user by email
+    const userSnap = await db.collection("users").where("email", "==", emailLower).limit(1).get();
+    if (userSnap.empty) {
       return res.status(401).json({ success: false, error: 'Invalid credentials' });
     }
-    const isMatch = await user.matchPassword(password);
+    
+    const userDoc = userSnap.docs[0];
+    const userData = userDoc.data();
+    
+    // Compare password
+    const isMatch = await bcrypt.compare(password, userData.password);
     if (!isMatch) {
       return res.status(401).json({ success: false, error: 'Invalid credentials' });
     }
-    sendTokenResponse(user, 200, res);
+    
+    sendTokenResponse(userDoc.id, 200, res);
   } catch (error) {
     res.status(500).json({ success: false, error: error.message });
   }
@@ -120,18 +130,31 @@ router.post('/google', async (req, res) => {
       name = userInfo.name || userInfo.given_name || userInfo.email.split('@')[0];
     }
 
-    let user = await User.findOne({ email });
-
-    if (!user) {
+    const emailLower = email.toLowerCase();
+    
+    // Check if user exists in Firestore
+    const userSnap = await db.collection("users").where("email", "==", emailLower).limit(1).get();
+    
+    let userId;
+    if (userSnap.empty) {
+      // Create user
       const randomPassword = crypto.randomBytes(32).toString('hex');
-      user = await User.create({
-        fullName: name,
-        email: email,
-        password: randomPassword
+      const salt = await bcrypt.genSalt(10);
+      const hashedPassword = await bcrypt.hash(randomPassword, salt);
+      
+      const userRef = db.collection("users").doc();
+      await userRef.set({
+        fullName: name || '',
+        email: emailLower,
+        password: hashedPassword,
+        createdAt: new Date().toISOString()
       });
+      userId = userRef.id;
+    } else {
+      userId = userSnap.docs[0].id;
     }
 
-    sendTokenResponse(user, 200, res);
+    sendTokenResponse(userId, 200, res);
   } catch (error) {
     console.error('GOOGLE AUTH ERROR:', error);
     res.status(500).json({ success: false, error: 'Google authentication failed' });
@@ -157,27 +180,47 @@ const sendEmail = async (options) => {
 
 router.post('/forgotpassword', async (req, res) => {
   try {
-    const user = await User.findOne({ email: req.body.email });
-    if (!user) {
+    const { email } = req.body;
+    const emailLower = email.toLowerCase();
+    
+    const userSnap = await db.collection("users").where("email", "==", emailLower).limit(1).get();
+    if (userSnap.empty) {
       return res.status(404).json({ success: false, error: 'There is no user with that email' });
     }
-    const resetToken = user.getResetPasswordToken();
-    await user.save({ validateBeforeSave: false });
+    
+    const userDoc = userSnap.docs[0];
+    
+    // Generate reset token
+    const resetToken = crypto.randomBytes(20).toString('hex');
+    const resetPasswordToken = crypto
+      .createHash('sha256')
+      .update(resetToken)
+      .digest('hex');
+    const resetPasswordExpire = Date.now() + 10 * 60 * 1000; // 10 Minutes
+    
+    // Save to document
+    await db.collection("users").doc(userDoc.id).update({
+      resetPasswordToken,
+      resetPasswordExpire
+    });
+    
     const resetUrl = `${process.env.FRONTEND_URL || 'http://localhost:5173'}/reset-password/${resetToken}`;
-    const message = `You are receiving this email because you (or someone else) has requested the reset of a password. Please make a PUT request to: \n\n ${resetUrl}`;
+    const message = `You are receiving this email because you (or someone else) has requested the reset of a password. Please open this link to reset it: \n\n ${resetUrl}`;
     
     try {
       await sendEmail({
-        email: user.email,
+        email: emailLower,
         subject: 'Password reset token',
         message
       });
       res.status(200).json({ success: true, data: 'Email sent' });
     } catch (err) {
-      console.log(err);
-      user.resetPasswordToken = undefined;
-      user.resetPasswordExpire = undefined;
-      await user.save({ validateBeforeSave: false });
+      console.error(err);
+      // Clear token fields on failure
+      await db.collection("users").doc(userDoc.id).update({
+        resetPasswordToken: admin.firestore.FieldValue.delete(),
+        resetPasswordExpire: admin.firestore.FieldValue.delete()
+      });
       return res.status(500).json({ success: false, error: 'Email could not be sent' });
     }
   } catch (error) {
@@ -192,21 +235,31 @@ router.put('/resetpassword/:token', async (req, res) => {
       .update(req.params.token)
       .digest('hex');
 
-    const user = await User.findOne({
-      resetPasswordToken,
-      resetPasswordExpire: { $gt: Date.now() }
-    });
+    // Query Firestore for matching token and non-expired window
+    const userSnap = await db.collection("users")
+      .where("resetPasswordToken", "==", resetPasswordToken)
+      .where("resetPasswordExpire", ">", Date.now())
+      .limit(1)
+      .get();
 
-    if (!user) {
+    if (userSnap.empty) {
       return res.status(400).json({ success: false, error: 'Invalid or expired token' });
     }
 
-    user.password = req.body.password;
-    user.resetPasswordToken = undefined;
-    user.resetPasswordExpire = undefined;
-    await user.save();
+    const userDoc = userSnap.docs[0];
+    
+    // Hash new password
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(req.body.password, salt);
 
-    sendTokenResponse(user, 200, res);
+    // Update document and clear token fields
+    await db.collection("users").doc(userDoc.id).update({
+      password: hashedPassword,
+      resetPasswordToken: admin.firestore.FieldValue.delete(),
+      resetPasswordExpire: admin.firestore.FieldValue.delete()
+    });
+
+    sendTokenResponse(userDoc.id, 200, res);
   } catch (error) {
     res.status(500).json({ success: false, error: error.message });
   }
@@ -224,11 +277,18 @@ router.get('/me', async (req, res) => {
 
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    const user = await User.findById(decoded.id);
-    if (!user) {
+    
+    // Fetch from Firestore
+    const userDoc = await db.collection("users").doc(decoded.id).get();
+    if (!userDoc.exists) {
       return res.status(404).json({ success: false, error: 'No user found with this id' });
     }
-    res.status(200).json({ success: true, data: user });
+    
+    const userData = userDoc.data();
+    // Exclude password from response
+    delete userData.password;
+    
+    res.status(200).json({ success: true, data: { id: userDoc.id, ...userData } });
   } catch (error) {
     res.status(401).json({ success: false, error: 'Not authorized to access this route' });
   }
@@ -246,17 +306,23 @@ router.put('/profile', async (req, res) => {
 
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    const user = await User.findById(decoded.id);
-    if (!user) {
+    const userDoc = await db.collection("users").doc(decoded.id).get();
+    if (!userDoc.exists) {
       return res.status(404).json({ success: false, error: 'No user found with this id' });
     }
     
     const { fullName, profilePhoto } = req.body;
-    if (fullName !== undefined) user.fullName = fullName;
-    if (profilePhoto !== undefined) user.profilePhoto = profilePhoto;
+    const updateData = {};
+    if (fullName !== undefined) updateData.fullName = fullName;
+    if (profilePhoto !== undefined) updateData.profilePhoto = profilePhoto;
     
-    await user.save();
-    res.status(200).json({ success: true, data: user });
+    await db.collection("users").doc(decoded.id).update(updateData);
+    
+    const updatedUserDoc = await db.collection("users").doc(decoded.id).get();
+    const updatedUserData = updatedUserDoc.data();
+    delete updatedUserData.password;
+    
+    res.status(200).json({ success: true, data: { id: decoded.id, ...updatedUserData } });
   } catch (error) {
     console.error('PROFILE UPDATE ERROR:', error);
     res.status(500).json({ success: false, error: 'Failed to update profile' });
