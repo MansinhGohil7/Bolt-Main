@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import Footer from '../components/Footer';
+import { API_URL } from '../config';
 
 const Dashboard = () => {
   const [user, setUser] = useState(null);
@@ -20,7 +21,7 @@ const Dashboard = () => {
       }
       
       try {
-        const response = await fetch('http://localhost:5000/api/auth/me', {
+        const response = await fetch(`${API_URL}/api/auth/me`, {
           headers: {
             'Authorization': `Bearer ${token}`
           }
@@ -107,7 +108,7 @@ const Dashboard = () => {
     setSaveStatus({ type: 'loading', message: 'Saving changes...' });
     const token = localStorage.getItem('token');
     try {
-      const response = await fetch('http://localhost:5000/api/auth/profile', {
+      const response = await fetch(`${API_URL}/api/auth/profile`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

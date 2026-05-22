@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate, useParams } from 'react-router-dom';
 import Footer from '../components/Footer';
+import { API_URL } from '../config';
 
 const ResetPassword = () => {
   const [password, setPassword] = useState('');
@@ -41,7 +42,7 @@ const ResetPassword = () => {
     }
     
     try {
-      const response = await fetch(`http://localhost:5000/api/auth/resetpassword/${token}`, {
+      const response = await fetch(`${API_URL}/api/auth/resetpassword/${token}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

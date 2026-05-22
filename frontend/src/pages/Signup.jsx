@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate, Link, useLocation } from 'react-router-dom';
 import { useGoogleLogin } from '@react-oauth/google';
 import Footer from '../components/Footer';
+import { API_URL } from '../config';
 
 const Signup = () => {
   const location = useLocation();
@@ -81,7 +82,7 @@ const Signup = () => {
       }
       
       try {
-        const response = await fetch('http://localhost:5000/api/auth/signup', {
+        const response = await fetch(`${API_URL}/api/auth/signup`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
@@ -109,7 +110,7 @@ const Signup = () => {
       }
       
       try {
-        const response = await fetch('http://localhost:5000/api/auth/login', {
+        const response = await fetch(`${API_URL}/api/auth/login`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
@@ -150,7 +151,7 @@ const Signup = () => {
     setError('');
     setSuccess('');
     try {
-      const response = await fetch('http://localhost:5000/api/auth/google', {
+      const response = await fetch(`${API_URL}/api/auth/google`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ token: credentialResponse.credential })

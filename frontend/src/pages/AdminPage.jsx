@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import { API_URL } from '../config';
 
 const AdminPage = () => {
   const [admin, setAdmin] = useState(null);
@@ -16,7 +17,7 @@ const AdminPage = () => {
       }
       
       try {
-        const response = await fetch('http://localhost:5000/api/auth/me', {
+        const response = await fetch(`${API_URL}/api/auth/me`, {
           headers: {
             'Authorization': `Bearer ${token}`
           }
